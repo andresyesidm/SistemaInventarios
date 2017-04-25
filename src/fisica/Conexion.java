@@ -37,6 +37,15 @@ public class Conexion {
         }
         System.out.println("Conexion exitosa");
     }
+
+    public Connection getConexion() {
+        return conexion;
+    }
+
+    public void setConexion(Connection conexion) {
+        this.conexion = conexion;
+    }
+    
     
     
 }
