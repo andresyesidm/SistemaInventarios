@@ -88,3 +88,8 @@ CREATE TABLE Coti_Producto(
 	Product_Id int references Producto(Product_Id),
 	Cantidad int not null
 );
+
+insert into Sucursal (Sucursal_Id,Nombre,Direccion,Telefono,Ciudad)values (1,'Bodega','Calle...','3434555','Bogota');
+insert into UsuarioLogin (Usua_Id,Usua_Pass,Rol,Nombre,Direccion,Correo,Telefono,Sucursal_Id) values (1,'81dc9bdb52d04dc20036dbd8313ed055','admin','admin','call3','cgc','534',1);
+
+select * from UsuarioLogin where Nombre='admin' and Usua_Pass='81dc9bdb52d04dc20036dbd8313ed055'

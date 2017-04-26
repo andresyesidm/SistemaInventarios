@@ -8,6 +8,7 @@ package logica;
 import fisica.Conexion;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,9 +52,11 @@ public class Usuario extends Persona{
         this.rol = rol;
     }
     
-    public void autenticar(String usua,String password){
+    public boolean autenticar(int usua,String password){
         Conexion conec= new Conexion();
+        boolean Correcto=false;
         try {
+            //Verificacion del Cifrado de la contraseña en md5
             MessageDigest md=MessageDigest.getInstance("MD5");
             byte[] array = md.digest(password.getBytes());
             StringBuffer sb = new StringBuffer();
@@ -61,16 +64,19 @@ public class Usuario extends Persona{
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100)
                         .substring(1, 3));
             }
-            String consulta="select * from UsuarioLogin where Nombre='"+usua+"' and Usua_Pass='"+sb.toString()+"'";
-            Statement sentencia = conec.getConexion().createStatement();
-            ResultSet resultado = sentencia.executeQuery(consulta);
+            //Consulta en la bd
+            PreparedStatement sentencia= conec.getConexion().prepareStatement("SELECT * FROM Login WHERE Identificacion=? "
+                    + "AND Contraseña=?");
+            sentencia.setInt(1, usua);
+            sentencia.setString(2, sb.toString());
+            ResultSet resultado = sentencia.executeQuery();
             if(resultado.next()){
-
-                JOptionPane.showMessageDialog(null, "Acceso concedido");
+                Correcto=true;
             }
             else{
-                System.out.println("Contraseña incorrecta");
+                Correcto=false;
             }
+            sentencia.close();
             resultado.close();
             conec.getConexion().close();
             
@@ -79,6 +85,7 @@ public class Usuario extends Persona{
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return Correcto;
     }
     public void registrar(){
     }
