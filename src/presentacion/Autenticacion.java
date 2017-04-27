@@ -170,6 +170,12 @@ public class Autenticacion extends javax.swing.JFrame {
                 AdvertenciaContra.setVisible(true);
             }
             else{
+                if(usua.getRol().equals("admin")){
+                    new Administrador().setVisible(true);
+                }
+                else{
+                }
+                this.setVisible(false);
             }
         }
         catch(NumberFormatException e){

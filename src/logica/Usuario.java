@@ -72,6 +72,7 @@ public class Usuario extends Persona{
             ResultSet resultado = sentencia.executeQuery();
             if(resultado.next()){
                 Correcto=true;
+                this.setRol(resultado.getString("Rol"));
             }
             else{
                 Correcto=false;
