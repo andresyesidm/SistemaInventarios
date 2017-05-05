@@ -12,9 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -88,7 +90,54 @@ public class Usuario extends Persona{
         }
         return Correcto;
     }
+    
+    public DefaultTableModel Consulta(){
+        Conexion conec= new Conexion();
+        DefaultTableModel modelo= new DefaultTableModel();
+        //String[] column;
+        Object[] result;
+        try{
+            PreparedStatement sentencia=conec.getConexion().prepareStatement("SELECT * FROM AdministracionUsuarios");
+            ResultSet resultado=sentencia.executeQuery();
+            //column= new String[resultado.getMetaData().getColumnCount()];
+            result= new Object[resultado.getMetaData().getColumnCount()];
+            for(int i=1;i<=resultado.getMetaData().getColumnCount();i++){
+                modelo.addColumn(resultado.getMetaData().getColumnName(i));
+            }
+            while(resultado.next()){
+                result[0]=resultado.getInt(1);
+                for(int i=1;i<result.length;i++){
+                result[i]=resultado.getString(i+1);
+                }
+            modelo.addRow(result);
+            }
+        }
+        catch(SQLException e){
+        
+        }
+        return modelo;
+    }
+    public void Consulta(String Nombre){
+        Conexion conec= new Conexion();
+        try{
+            PreparedStatement sentencia=conec.getConexion().prepareStatement("SELECT * FROM AdministracionUsuarios WHERE Nombre=?");
+            sentencia.setString(1,Nombre);
+            ResultSet resultado=sentencia.executeQuery();
+            if(resultado.next()){
+                
+            }
+        }
+        catch(SQLException e){
+        
+        }
+    }
     public void registrar(){
+        Conexion conect= new Conexion();
+        try{
+            PreparedStatement sentencia= conect.getConexion().prepareStatement("");
+        }
+        catch(SQLException e){
+        }
     }
     
     public void actualizar(){
