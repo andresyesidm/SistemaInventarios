@@ -99,15 +99,10 @@ insert into UsuarioLogin (Usua_Id,Usua_Pass,Rol,Nombre,Direccion,Correo,Telefono
 -----------------------------------------------------------------------------------------------------------------------
 -- VISTAS
 -----------------------------------------------------------------------------------------------------------------------
-----Usuarios
+
 CREATE OR REPLACE VIEW Login AS SELECT Usua_Id AS Identificacion,Usua_Pass AS Contraseña, Rol FROM UsuarioLogin;
 
 CREATE OR REPLACE VIEW AdministracionUsuarios AS SELECT Usua_Id AS Identificacion, Rol, Nombre, Direccion,Correo,Telefono FROM UsuarioLogin;
----Proveedores
-CREATE OR REPLACE VIEW AdministracionProveedor AS SELECT Prov_Id AS Nit, Nombre, Ciudad,Direccion,Correo,Telefono FROM Proveedor;
------Clientes
-CREATE OR REPLACE VIEW AdministracionCliente AS SELECT Clie_Id AS Identificacion, Nombre, Ciudad,Direccion,Correo,Telefono FROM Proveedor;
-
 
 -----------------------------------------------------------------------------------------------------------------------
 --TRIGGER

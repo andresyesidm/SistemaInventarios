@@ -23,7 +23,7 @@ public class Conexion {
 
     public Conexion() {
         host="localhost";
-        bd="Sistema de Inventarios V2";
+        bd="SistemaInventarios";
         usuario="postgres";
         password="1234";
         

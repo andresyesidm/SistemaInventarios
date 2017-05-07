@@ -8,26 +8,27 @@ package presentacion;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import logica.Proveedor;
 import logica.Usuario;
 
 /**
  *
  * @author andresyesid
  */
-public class AdministrarUsuarios extends javax.swing.JPanel {
+public class AdministrarProveedores extends javax.swing.JPanel {
 
-    private Usuario usua;
+    private Proveedor prov;
     /**
      * Creates new form AdministrarUsuarios
      */
-    public AdministrarUsuarios() {
+    public AdministrarProveedores() {
         initComponents();
-        usua= new Usuario();
+        prov= new Proveedor();
         initJTable();
     }
 
     public void initJTable(){
-        DefaultTableModel modelo=usua.Consulta(); 
+        DefaultTableModel modelo=prov.Consulta(); 
         jTable1.setModel(modelo);
         jTable1.getTableHeader().setFont(new Font("Thaoma", Font.BOLD, 12));
     }
@@ -54,7 +55,7 @@ public class AdministrarUsuarios extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Administración de Usuarios");
+        jLabel4.setText("Administración de Proveedores");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -124,7 +125,7 @@ public class AdministrarUsuarios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBRegistrarMouseClicked
-         new CRUDUsuario().setVisible(true); 
+         new CRUDProveedor().setVisible(true); 
     }//GEN-LAST:event_jBRegistrarMouseClicked
 
 

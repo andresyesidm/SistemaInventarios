@@ -171,7 +171,7 @@ public class Autenticacion extends javax.swing.JFrame {
             }
             else{
                 if(usua.getRol().equals("admin")){
-                    new Administrador().setVisible(true);
+                    new Administrador(usua.getNombre()+ " ID: "+usua.getNumeroIdentificacion()).setVisible(true);
                 }
                 else{
                 }

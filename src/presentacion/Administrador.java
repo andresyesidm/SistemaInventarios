@@ -6,6 +6,7 @@
 package presentacion;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,13 +30,20 @@ public class Administrador extends javax.swing.JFrame {
     //DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
     DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
           
-    
     public Administrador() {
         initComponents();
         ancho= Toolkit.getDefaultToolkit().getScreenSize().width;
         alto=Toolkit.getDefaultToolkit().getScreenSize().height;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+        this.Fecha.setText("Fecha: "+formatoFecha.format(fechaActual));
+    }
+    
+    public Administrador(String usuarioin) {
+        initComponents();
+        ancho= Toolkit.getDefaultToolkit().getScreenSize().width;
+        alto=Toolkit.getDefaultToolkit().getScreenSize().height;
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        Usuario.setText(usuarioin);
         this.Fecha.setText("Fecha: "+formatoFecha.format(fechaActual));
     }
 
@@ -67,6 +75,8 @@ public class Administrador extends javax.swing.JFrame {
         BSalir = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         Fecha = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        Usuario = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,6 +107,11 @@ public class Administrador extends javax.swing.JFrame {
         BAdminProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BAdminProveedor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BAdminProveedor.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        BAdminProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BAdminProveedorMouseClicked(evt);
+            }
+        });
 
         BAdminClientes.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         BAdminClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -105,6 +120,11 @@ public class Administrador extends javax.swing.JFrame {
         BAdminClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BAdminClientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BAdminClientes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        BAdminClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BAdminClientesMouseClicked(evt);
+            }
+        });
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -169,6 +189,12 @@ public class Administrador extends javax.swing.JFrame {
 
         Fecha.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("Bienvenido, ");
+
+        Usuario.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        Usuario.setText("---------");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -208,9 +234,16 @@ public class Administrador extends javax.swing.JFrame {
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Usuario)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,7 +271,11 @@ public class Administrador extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Usuario))
+                .addContainerGap())
         );
 
         jPanel2.setAutoscrolls(true);
@@ -247,7 +284,7 @@ public class Administrador extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 798, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,14 +315,31 @@ public class Administrador extends javax.swing.JFrame {
     }//GEN-LAST:event_BSalirMouseClicked
 
     private void BAdminUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BAdminUsuariosMouseClicked
-
+        jPanel2.removeAll();
         AdministrarUsuarios adminU= new AdministrarUsuarios();
         jPanel2.add(adminU);
         adminU.setVisible(true);
         adminU.setSize(jPanel2.getSize());
         adminU.updateUI();
-        System.out.println("Ejecuta");
     }//GEN-LAST:event_BAdminUsuariosMouseClicked
+
+    private void BAdminProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BAdminProveedorMouseClicked
+        jPanel2.removeAll();
+        AdministrarProveedores adminP= new AdministrarProveedores();
+        jPanel2.add(adminP);
+        adminP.setVisible(true);
+        adminP.setSize(jPanel2.getSize());
+        adminP.updateUI();
+    }//GEN-LAST:event_BAdminProveedorMouseClicked
+
+    private void BAdminClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BAdminClientesMouseClicked
+        jPanel2.removeAll();
+        AdministrarClientes adminC= new AdministrarClientes();
+        jPanel2.add(adminC);
+        adminC.setVisible(true);
+        adminC.setSize(jPanel2.getSize());
+        adminC.updateUI();
+    }//GEN-LAST:event_BAdminClientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -328,6 +382,8 @@ public class Administrador extends javax.swing.JFrame {
     private javax.swing.JLabel BSalir;
     private javax.swing.JLabel BVentas;
     private javax.swing.JLabel Fecha;
+    private javax.swing.JLabel Usuario;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;

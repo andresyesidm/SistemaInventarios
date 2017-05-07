@@ -54,27 +54,38 @@ public class Usuario extends Persona{
         this.rol = rol;
     }
     
-    public boolean autenticar(int usua,String password){
-        Conexion conec= new Conexion();
-        boolean Correcto=false;
+    public  String Encriptado(String password){
+        StringBuffer sb = new StringBuffer();
         try {
-            //Verificacion del Cifrado de la contraseña en md5
             MessageDigest md=MessageDigest.getInstance("MD5");
             byte[] array = md.digest(password.getBytes());
-            StringBuffer sb = new StringBuffer();
+            
             for (int i = 0; i < array.length; ++i) {
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100)
                         .substring(1, 3));
             }
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sb.toString();
+    }
+    
+    public boolean autenticar(int usua,String password){
+        Conexion conec= new Conexion();
+        boolean Correcto=false;
+        try {            
             //Consulta en la bd
             PreparedStatement sentencia= conec.getConexion().prepareStatement("SELECT * FROM Login WHERE Identificacion=? "
                     + "AND Contraseña=?");
             sentencia.setInt(1, usua);
-            sentencia.setString(2, sb.toString());
+            sentencia.setString(2, this.Encriptado(password));
             ResultSet resultado = sentencia.executeQuery();
             if(resultado.next()){
                 Correcto=true;
+                this.setNumeroIdentificacion(resultado.getInt("Identificacion"));
                 this.setRol(resultado.getString("Rol"));
+                this.setNombre(resultado.getString("Nombre"));   
             }
             else{
                 Correcto=false;
@@ -83,8 +94,6 @@ public class Usuario extends Persona{
             resultado.close();
             conec.getConexion().close();
             
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
